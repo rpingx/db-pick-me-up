@@ -1,8 +1,11 @@
 package db.pick.me.up;
 
+import db.pick.me.up.helper.DataBundle;
+import db.pick.me.up.helper.TransWrapper;
 import db.pick.me.up.singleton.Config;
 import org.json.simple.JSONArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,22 @@ public class WorkerRunnable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(dataBundle.size());
+        List<String> unlinkedList = new ArrayList<>();
+
+        //  Checking for unlinked fields
+        //  Unlinked in this context means the field being tested is not tightly coupled with another field
+        for (String field : dataBundle.get(0).keySet()) {
+            TransWrapper _t = new TransWrapper(config.getTransform(field));
+
+            if (_t.isUnlinked()) {
+                unlinkedList.add(field);
+            }
+        }
+
+        //  Since the field isn't tightly coupled, no reason to keep its order relative to other fields.
+        //  Scramble it up.
+        for (String field : unlinkedList) {
+            DataBundle.scrambleField(dataBundle, field);
+        }
     }
 }

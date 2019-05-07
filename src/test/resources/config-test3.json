@@ -9,12 +9,13 @@
     "pass": "password"
   },
   "config": {
-    "defaultAction": "passthru"
+    "defaultAction": "hide"
   },
   "transformations": [
     {
       "field": "gender",
-      "method": "passthru"
+      "method": "passthru",
+      "unlinked": true
     },
     {
       "field": "bonus",

@@ -9,7 +9,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +30,8 @@ public class Config {
     private JSONArray transformations;
 
     private Map<String, JSONObject> transMap = new HashMap<>();
+
+    private List<String> alreadyMessaged = new ArrayList<>();
 
     private Config() {
     }
@@ -69,8 +73,12 @@ public class Config {
         if (this.transMap.keySet().contains(field)) {
             return this.transMap.get(field);
         } else {
-            System.out.println("No transformation defined for: " + field);
-            System.out.println("Use default(" + this.configInfo.getDefaultAction() + ") behaviour.");
+            if (!this.alreadyMessaged.contains(field)) {
+                System.out.println("No transformation defined for: " + field);
+                System.out.println("Use default(" + this.configInfo.getDefaultAction() + ") behaviour.");
+                this.alreadyMessaged.add(field);
+            }
+
 
             JSONObject obj = new JSONObject();
             obj.put("field", field);
