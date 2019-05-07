@@ -1,0 +1,16 @@
+{
+  "connection": {
+    "type": "PostgreSQL",
+    "host": "localhost",
+    "port": 5432,
+    "database": "dvdrental",
+    "table": "actor",
+    "user" : "postgres",
+    "pass" : "password"
+  },
+  "config": {
+    "defaultAction" : "hide"
+  },
+  "transformations": [
+  ]
+}

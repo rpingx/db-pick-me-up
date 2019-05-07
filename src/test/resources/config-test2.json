@@ -1,0 +1,16 @@
+{
+  "connection": {
+    "type": "MySQL",
+    "host": "localhost",
+    "port": 3306,
+    "database": "world",
+    "table": "country",
+    "user" : "root",
+    "pass" : "password"
+  },
+  "config": {
+    "defaultAction" : "passthru"
+  },
+  "transformations": [
+  ]
+}
