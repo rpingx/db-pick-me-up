@@ -46,7 +46,6 @@ public class Start {
             List<String> hideList = null;
 
             while (rs.next()) {
-
                 //  Creating hideList to stop adding certain columns
                 //  Only want to do this once to stop repeating expensive actions
                 if (hideList == null) {
@@ -73,6 +72,7 @@ public class Start {
 
                 if (buffer.size() >= MAX_BUNDLE_SIZE) {
                     pool.execute(new WorkerRunnable(dataTypeMap, buffer));
+                    Thread.yield();
                     buffer = new ArrayList<>();
                 }
             }
@@ -82,7 +82,7 @@ public class Start {
 
             pool.shutdown();
             rs.close();
-            conn.close();
+         //   conn.close();
         } catch (SQLException e) {
             System.err.println("SQLException is main call: " + e.getMessage());
             e.printStackTrace();

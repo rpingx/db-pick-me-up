@@ -33,7 +33,7 @@ public class DataAccess {
             }
 
             rs.close();
-            conn.close();
+           // conn.close();
         } catch (SQLException e) {
             System.err.println("SQLException in getTotal: " + e.getMessage());
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class DataAccess {
                 result.put(rs.getString(1), rs.getString(2));
             }
             rs.close();
-            conn.close();
+            //conn.close();
         } catch (SQLException e) {
             System.err.println("SQLException in getDataTypeMap: " + e.getMessage());
             e.printStackTrace();

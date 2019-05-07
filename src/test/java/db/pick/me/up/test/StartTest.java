@@ -10,7 +10,7 @@ public class StartTest {
 
     @Test
     public void testMain() {
-        String[] args = {"src/test/resources/config-test3.json"};
+        String[] args = {"src/test/resources/config-test2.json"};
         Start.main(args);
     }
 }

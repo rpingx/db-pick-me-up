@@ -19,11 +19,11 @@
     },
     {
       "field": "bonus",
-      "method": "passthru"
+      "method": "random"
     },
     {
       "field": "salary",
-      "method": "passthru"
+      "method": "influence"
     },
     {
       "field": "ssn",

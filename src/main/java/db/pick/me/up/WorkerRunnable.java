@@ -61,7 +61,7 @@ public class WorkerRunnable implements Runnable {
                         _t);
 
                 if (masker != null) {
-                    rowOutput.add(masker.mask(row.get(field), _t));
+                    rowOutput.add(masker.mask(row.get(field), _t, row));
                 }
             }
 
