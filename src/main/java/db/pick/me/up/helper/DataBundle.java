@@ -29,4 +29,18 @@ public class DataBundle {
             row.put(field, newList.remove(0));
         }
     }
+
+    public static String textifyObject(Object obj) {
+        if (obj == null) {
+            return "null";
+        }
+        if (obj.getClass().equals(String.class)) {
+            StringBuffer sb = new StringBuffer("\"");
+            sb.append(((String) obj).replaceAll("\"", "\"\""));
+            sb.append("\"");
+            return sb.toString();
+        } else {
+            return obj.toString();
+        }
+    }
 }

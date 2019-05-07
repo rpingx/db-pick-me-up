@@ -1,5 +1,6 @@
 package db.pick.me.up.singleton;
 
+import db.pick.me.up.helper.TransWrapper;
 import db.pick.me.up.json.ConfigInfo;
 import db.pick.me.up.json.ConnectionInfo;
 import lombok.Getter;
@@ -29,9 +30,7 @@ public class Config {
     @Getter
     private JSONArray transformations;
 
-    private Map<String, JSONObject> transMap = new HashMap<>();
-
-    private List<String> alreadyMessaged = new ArrayList<>();
+    private Map<String, TransWrapper> transMap = new HashMap<>();
 
     private Config() {
     }
@@ -61,7 +60,7 @@ public class Config {
             for (Object transformation : this.transformations) {
                 JSONObject transform = (JSONObject) transformation;
 
-                this.transMap.put((String) transform.get("field"), transform);
+                this.transMap.put((String) transform.get("field"), new TransWrapper(transform));
             }
         } catch (Exception e) {
             System.err.println("E: " + e.getMessage());
@@ -69,22 +68,24 @@ public class Config {
         }
     }
 
-    public JSONObject getTransform(String field) {
+    public TransWrapper getTransform(String field) {
         if (this.transMap.keySet().contains(field)) {
             return this.transMap.get(field);
         } else {
-            if (!this.alreadyMessaged.contains(field)) {
+
                 System.out.println("No transformation defined for: " + field);
                 System.out.println("Use default(" + this.configInfo.getDefaultAction() + ") behaviour.");
-                this.alreadyMessaged.add(field);
-            }
+
 
 
             JSONObject obj = new JSONObject();
             obj.put("field", field);
             obj.put("method", this.configInfo.getDefaultAction().getValue());
 
-            return obj;
+            TransWrapper wrap = new TransWrapper(obj);
+            this.transMap.put(field, wrap);
+
+            return wrap;
         }
     }
 }

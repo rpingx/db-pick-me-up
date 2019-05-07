@@ -19,7 +19,16 @@
     },
     {
       "field": "bonus",
-      "method": "hide"
+      "method": "passthru"
+    },
+    {
+      "field": "salary",
+      "method": "passthru"
+    },
+    {
+      "field": "ssn",
+      "method": "passthru",
+      "unlinked": true
     }
   ]
 }
