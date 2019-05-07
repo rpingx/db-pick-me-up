@@ -1,0 +1,24 @@
+{
+  "connection": {
+    "type": "PostgreSQL",
+    "host": "tonic-public-data.cme6galhjrni.us-east-1.rds.amazonaws.com",
+    "port": 5432,
+    "database": "hr_demo",
+    "table": "employees",
+    "user": "demo",
+    "pass": "password"
+  },
+  "config": {
+    "defaultAction": "passthru"
+  },
+  "transformations": [
+    {
+      "field": "gender",
+      "method": "passthru"
+    },
+    {
+      "field": "bonus",
+      "method": "hide"
+    }
+  ]
+}

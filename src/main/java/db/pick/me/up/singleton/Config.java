@@ -9,6 +9,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by admin on 5/7/2019.
@@ -24,6 +26,8 @@ public class Config {
     private ConfigInfo configInfo;
     @Getter
     private JSONArray transformations;
+
+    private Map<String, JSONObject> transMap = new HashMap<>();
 
     private Config() {
     }
@@ -49,9 +53,30 @@ public class Config {
             this.connectionInfo = new ConnectionInfo((JSONObject) infoObj.get("connection"));
             this.configInfo = new ConfigInfo((JSONObject) infoObj.get("config"));
             this.transformations = (JSONArray) infoObj.get("transformations");
+
+            for (Object transformation : this.transformations) {
+                JSONObject transform = (JSONObject) transformation;
+
+                this.transMap.put((String) transform.get("field"), transform);
+            }
         } catch (Exception e) {
-            System.out.println("E: " + e.getMessage());
+            System.err.println("E: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public JSONObject getTransform(String field) {
+        if (this.transMap.keySet().contains(field)) {
+            return this.transMap.get(field);
+        } else {
+            System.out.println("No transformation defined for: " + field);
+            System.out.println("Use default(" + this.configInfo.getDefaultAction() + ") behaviour.");
+
+            JSONObject obj = new JSONObject();
+            obj.put("field", field);
+            obj.put("method", this.configInfo.getDefaultAction().getValue());
+
+            return obj;
         }
     }
 }
